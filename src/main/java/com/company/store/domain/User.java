@@ -1,18 +1,28 @@
 package com.company.store.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 public class User {
     private String uid;
 
+    @Pattern(regexp ="(^[a-zA-Z0-9_-]{5,14}$)|(^[\\u2E80-\\u9FFF]{2,6})",
+            message ="用户名应为5-14英文或2-6中文")
     private String username;
 
     private String password;
 
     private String name;
 
+    @Pattern(regexp ="^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$",
+            message ="用户名应为5-14英文或2-6中文")
     private String email;
 
+    @Pattern(regexp ="^1[34578]\\d{9}$",
+            message ="请填写正确的电话号码！")
     private String telephone;
 
     private Date birthday;
@@ -71,10 +81,11 @@ public class User {
         this.telephone = telephone == null ? null : telephone.trim();
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public Date getBirthday() {
         return birthday;
     }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }

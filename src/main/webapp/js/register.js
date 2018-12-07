@@ -22,13 +22,15 @@ $(function () {
     check_password();
     check_name();
     check_telephone();
-    /**
-     * 清楚提示信息
-     */
+    check_birthday();
+
+    clear_msg();
+});
+function clear_msg(){
     $("#resetBtn").click(function(){
         $(".input-error").text("");
     });
-});
+}
 function setDateTime(){
     $('.form_date').datetimepicker({
         language:  'zh-CN',
@@ -108,8 +110,20 @@ function check_username(){
             $(".username-input-error").text("用户名应为5-14英文或2-6中文").css("display","block");
             state1=false;
         }else{
-            $(".username-input-error").text("").css("display","none");
-            state1=true;
+            $.ajax({
+                url:"/checkUserName",
+                data:"username="+username,
+                type:"get",
+                success:function (result) {
+                    if(result>0){
+                        $(".username-input-error").text("用户名已存在，请更改！").css("display","block");
+                        state1 = false;
+                    }else {
+                        $(".username-input-error").text("").css("display","none");
+                        state1 = true;
+                    }
+                }
+            });
         }
     });
 }
@@ -126,23 +140,16 @@ function check_email(){
             $(".email-input-error").text("邮箱格式不正确！").css("display","block");
             state2 = false;
         }else{
-            /*//ajax校验email是否存在
-            $.ajax({
-                url:"/checkEmpName",
-                data:"email="+email,
-                type:"get",
-                success:function (result) {
-                    if(result>0){
-                        $(".email-input-error").text("邮箱已存在，请更改！").css("display","block");
-                        state2 = false;
-                    }else {
-                        $(".email-input-error").text("").css("display","none");
-                        state2 = true;
-                    }
-                }
-            });*/
             $(".email-input-error").text("").css("display","none");
             state2 = true;
+        }
+    });
+}
+function check_birthday(){
+    $("input[name='birthday']").change(function () {
+        var birthday=this.value;
+        if(!is_empty(birthday)){
+            $(".birthday-input-error").text("").css("display","block");
         }
     });
 }
@@ -159,11 +166,9 @@ function addUser(){
     }
     if(state1&&state2&&state3&&state4&&state5&&state6){
         console.log(params);
-        alert("成功");
-    }
-    /*if(state1&&state2&&state3&&state4&&state5&&state6){
+        $("#resetBtn").trigger('click');
         $.ajax({
-            url:"/addUser",
+            url:"/saveUser",
             data:{
                 username:params.username,
                 email:params.email,
@@ -175,12 +180,15 @@ function addUser(){
             },
             type:"post",
             success:function (result){
-
+                if(result.code==100){
+                    alert("注册成功请登录！");
+                }else{
+                    alert("注册失败请重新注册！");
+                }
             }
         });
-    }else{
-        return
-    }*/
+    }
+
 }
 
 function is_empty(obj) {

@@ -3,6 +3,7 @@ package com.company.store.dao;
 import com.company.store.domain.User;
 import com.company.store.domain.UserExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {

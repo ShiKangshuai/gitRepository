@@ -25,7 +25,7 @@
     </bean>
     <!--配置扫描器，将mybatis接口的实现加入到ioc中-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.store.dao"></property>
+        <property name="basePackage" value="com.company.store.dao"></property>
     </bean>
     <!--事务的控制-->
     <!--事务的控制-->
