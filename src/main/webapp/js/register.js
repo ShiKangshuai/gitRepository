@@ -41,7 +41,8 @@ function setDateTime(){
         todayHighlight: 1,
         startView: 2,
         minView: 2,
-        forceParse: 0
+        forceParse: 0,
+        pickerPosition: "bottom-left"
     });
 }
 function getValue(){
@@ -165,7 +166,6 @@ function addUser(){
         state6=true;
     }
     if(state1&&state2&&state3&&state4&&state5&&state6){
-        console.log(params);
         $("#resetBtn").trigger('click');
         $.ajax({
             url:"/saveUser",
@@ -180,11 +180,7 @@ function addUser(){
             },
             type:"post",
             success:function (result){
-                if(result.code==100){
-                    alert("注册成功请登录！");
-                }else{
-                    alert("注册失败请重新注册！");
-                }
+
             }
         });
     }

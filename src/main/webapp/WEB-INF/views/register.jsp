@@ -159,7 +159,7 @@
                     <label class="col-sm-2 control-label">出生日期</label>
                     <div  class="col-sm-5">
                         <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                            <input class="form-control" style="width:220px;" size="16" type="text" value="" name="birthday" readonly>
+                            <input class="form-control" style="width:246px;" size="16" type="text" value="" name="birthday" readonly>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
