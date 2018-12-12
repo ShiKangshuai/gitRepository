@@ -127,4 +127,16 @@ public class UserController {
             }
         }
     }
+    /**
+     * 功能描述: <br>
+     * 〈用户注销〉
+     * @return:String
+     * @Author:shikangshuai
+     * @Date: 2018/12/12 21:07
+     */
+    @RequestMapping("/userLogOut")
+    public String userLogOut(HttpSession session){
+        session.invalidate();
+        return "index";
+    }
 }
