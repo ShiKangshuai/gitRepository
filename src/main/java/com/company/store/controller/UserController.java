@@ -8,6 +8,7 @@ package com.company.store.controller;
 
 import com.company.store.domain.User;
 import com.company.store.service.UserService;
+import com.company.store.utils.MailUtil;
 import com.company.store.utils.Msg;
 import com.company.store.utils.UUIDUtils;
 import org.apache.ibatis.annotations.Param;
@@ -19,8 +20,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -56,26 +56,52 @@ public class UserController {
      * @Author:shikangshuai
      * @Date: 2018/12/7 11:40
      */
+    @ResponseBody
     @RequestMapping("/saveUser")
-    public String saveUser(@Valid User user, BindingResult result, Model model){
+    public Msg saveUser(@Valid User user, BindingResult result, Model model){
         //HttpServletRequest request
-        user.setUid(UUIDUtils.getId());
-        user.setCode(UUIDUtils.getCode());
+        String code = UUIDUtils.getCode();
+        String uid = UUIDUtils.getId();
+        user.setUid(uid);
+        user.setCode(code);
         if(result.hasErrors()){
             //fieldError.getField()错误的字段名，fieldError.getDefaultMessage()错误信息
-           /* Map<String,Object> map = new HashMap<>();
+            Map<String,Object> map = new HashMap<>();
             List<FieldError> errors = result.getFieldErrors();
             for(FieldError fieldError:errors){
                 map.put(fieldError.getField(),fieldError.getDefaultMessage());
-            }*/
+            }
            model.addAttribute("msg","注册失败请重新注册！");
-            return "info";
+            return Msg.fail().add("errorFields",map);
         }else {
-            userService.saveUser(user);
-            model.addAttribute("msg","注册成功，请到邮箱验证！");
-            //request.setAttribute("msg","注册成功，请到邮箱验证！");
-            return "info";
+            if(userService.saveUser(user)>0){
+                new Thread(new MailUtil(user.getEmail(),user.getCode())).start();
+                model.addAttribute("msg","注册成功，请到邮箱验证！");
+                return Msg.success();
+            }else{
+                model.addAttribute("msg","注册失败请重新注册！");
+                return Msg.fail();
+            }
+
         }
+    }
+    /**
+     * 功能描述: <br>
+     * 〈跳转到注册验证提示页面〉
+     * @return:String
+     * @Author:shikangshuai
+     * @Date: 2018/12/12 9:50
+     */
+    @RequestMapping("/to_registerConfigInfo_page")
+    public String to_registerConfig_page(@Param(value="code") String code,Model model){
+        if(userService.updateState(code)>0){
+            model.addAttribute("msg","用户激活成功!");
+            return "registerConfigInfo";
+        }else{
+            model.addAttribute("msg","用户激活失败！");
+            return "errorPage";
+        }
+
     }
 
 }

@@ -5,5 +5,7 @@ import com.company.store.domain.User;
 public interface UserService {
     long checkUserName(String username);
 
-    void saveUser(User user);
+    int saveUser(User user);
+
+    int updateState(String code);
 }

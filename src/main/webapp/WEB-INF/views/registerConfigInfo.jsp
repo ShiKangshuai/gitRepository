@@ -1,11 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: shikangshuai
-  Date: 2018/12/7
-  Time: 14:41
+  Date: 2018/12/12
+  Time: 9:53
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<meta http-equiv="refresh" content="4;url='/to_login_page'">
 <html>
 <head>
     <link rel="icon"
@@ -105,7 +106,10 @@
 
 <div class="container" style="width:100%;height: 50%">
     <div class="row">
-        <h1>${msg}</h1>
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <h2>${msg}</h2>
+        </div>
     </div>
 </div>
 

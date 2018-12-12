@@ -180,6 +180,15 @@ function addUser(){
             },
             type:"post",
             success:function (result){
+                var curWwwPath=window.document.location.href;
+                var pathName=window.document.location.pathname;
+                var pos=curWwwPath.indexOf(pathName);
+                var localhostPath=curWwwPath.substring(0,pos);
+                if(result.code==100){
+                    window.location.href=localhostPath+"/to_registerSuccess_page";
+                }else{
+                    window.location.href=localhostPath+"/to_errorPage_page";
+                }
 
             }
         });

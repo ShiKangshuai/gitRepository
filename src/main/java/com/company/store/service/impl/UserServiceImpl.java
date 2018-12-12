@@ -41,7 +41,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
-        userMapper.insertSelective(user);
+    public int saveUser(User user) {
+        return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public int updateState(String code) {
+        return userMapper.updateStateByCode(code);
     }
 }
