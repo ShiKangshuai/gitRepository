@@ -13,6 +13,8 @@ import com.company.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 〈一句话功能简述〉<br> 
  *
@@ -48,5 +50,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateState(String code) {
         return userMapper.updateStateByCode(code);
+    }
+
+    @Override
+    public List<User> getUser(User user) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUsernameEqualTo(user.getUsername());
+        criteria.andPasswordEqualTo(user.getPassword());
+        return userMapper.selectByExample(example);
     }
 }

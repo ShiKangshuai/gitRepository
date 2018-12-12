@@ -91,7 +91,7 @@ function check_password(){
         if(is_empty(password)){
             $(".password-input-error").text("密码不能为空，请输入！").css("display","block");
             state3 = false;
-        }else if(password.length<=6||password.length>=15){
+        }else if(password.trim().length<=6||password.trim().length>=15){
             $(".password-input-error").text("密码长度应大于6小于16位！").css("display","block");
             state3 = false;
         }else{

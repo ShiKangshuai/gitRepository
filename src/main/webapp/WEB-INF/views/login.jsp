@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <link rel="icon"
@@ -21,6 +22,7 @@
 
     <script type="text/javascript" src="${APP_PATH}/static/jQuery/jquery.min.js"></script>
     <script type="text/javascript" src="${APP_PATH}/static/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="${APP_PATH}/js/login.js"></script>
 
     <style>
         body{
@@ -116,19 +118,32 @@
                 <font>会员登录</font>USER LOGIN
 
                 <div>&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-6 input-error"style="display: block" id="msg"></div>
+                </div>
+                <div>&nbsp;</div>
                 <form class="form-horizontal">
 
                     <div class="form-group">
-                        <label for="username" class="col-sm-2 control-label">用户名</label>
+                        <label for="username"  class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="username" placeholder="请输入用户名">
+                            <input type="text" name="username" data-rule="" class="form-control" id="username" placeholder="请输入用户名">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-6 username-input-error input-error"></div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-6">
-                            <input type="password" class="form-control" id="" placeholder="请输入密码">
+                            <input type="password" name="password" data-rule="" class="form-control" id="" placeholder="请输入密码">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-6 password-input-error input-error"></div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-2 control-label">验证码</label>
@@ -140,7 +155,7 @@
                         </div>
 
                     </div>
-                    <div class="form-group">
+                    <%--<div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox">
                                 <label>
@@ -151,12 +166,13 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div>--%>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <input type="submit" width="100" value="登录" name="submit" border="0"
-                                   style="background: url('${APP_PATH}/img/login.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-                                           height:35px;width:100px;color:white;">
+                           <%-- <input type="button" width="100" value="登录" class="btn btn-primary" border="0" style="height:35px;">--%>
+                               <input type="button" id="addBtn" width="100" value="登录"  border="0"
+                                      style="height:35px;width:100px;" class="btn btn-primary" onclick="loginIn()">
+                               <input type="reset" id="resetBtn" class="btn btn-success" value="重置" style="height:35px;width:100px;">
                         </div>
                     </div>
                 </form>

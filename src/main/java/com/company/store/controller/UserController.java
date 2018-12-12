@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -103,5 +104,27 @@ public class UserController {
         }
 
     }
-
+    /**
+     * 功能描述: <br>
+     * 〈用户登录验证〉
+     * @return:Msg
+     * @Author:shikangshuai
+     * @Date: 2018/12/12 16:02
+     */
+    @RequestMapping("/userLogin")
+    @ResponseBody
+    public Msg userLogin(User user,Model model,HttpSession session){
+        List<User> userList=userService.getUser(user);
+        if(userList.size()==0){
+            return Msg.fail().add("msg","用户密码错误,请修改密码！");
+        }else{
+            User user0 = userList.get(0);
+            if(user0.getState()==0){
+                return Msg.fail().add("msg","用户未激活,请到邮箱激活！");
+            }else{
+                session.setAttribute("user",user0);
+                return Msg.success();
+            }
+        }
+    }
 }

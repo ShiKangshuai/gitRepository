@@ -66,5 +66,16 @@ public class ToPageController {
         return "login";
     }
 
+    /**
+     * 功能描述: <br>
+     * 〈跳转到首页〉
+     * @return:String
+     * @Author:shikangshuai
+     * @Date: 2018/12/12 16:49
+     */
+    @RequestMapping("/to_index_page")
+    public String to_index_page(){
+        return "index";
+    }
 
 }
