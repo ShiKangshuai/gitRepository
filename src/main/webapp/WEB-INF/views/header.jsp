@@ -53,11 +53,10 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">手机数码<span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">电脑办公</a></li>
-                    <li><a href="#">电脑办公</a></li>
-                    <li><a href="#">电脑办公</a></li>
+                <ul class="nav navbar-nav" id="myUL">
+                   <%-- <c:forEach items="${categotyList}" var="categoty">
+                        <li><a href="#">${categoty.cname}</a></li>
+                    </c:forEach>--%>
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
@@ -73,14 +72,23 @@
     </nav>
 </div>
 <script>
-    $.ajax({
-        url:"//categoty/findAllCategoty",
-        data:{},
-        type:"post",
-        success:function (result) {
-            
-        }
+    $(function () {
+        $.ajax({
+            url:"/categoty/findCategotyList",
+            data:{},
+            type:"post",
+            success:function (result) {
+                var categotyList = result.extend.categotyList;
+                if(categotyList!=null){
+                    $.each(categotyList,function (index,item) {
+                        var li = "<li><a href=''>"+item.cname+"</a></li>"
+                        $("#myUL").append(li);
+                    });
+                }
+            }
+        });
     });
+
 </script>
 </body>
 </html>

@@ -113,7 +113,7 @@ public class UserController {
      */
     @RequestMapping("/userLogin")
     @ResponseBody
-    public Msg userLogin(User user,Model model,HttpSession session){
+    public Msg userLogin(User user,HttpSession session){
         List<User> userList=userService.getUser(user);
         if(userList.size()==0){
             return Msg.fail().add("msg","用户密码错误,请修改密码！");
